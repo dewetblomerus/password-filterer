@@ -7,8 +7,13 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Password</h1>
-          <LetterInput letters={this._letters.bind(this)} index={0} />
-          <LetterInput letters={this._letters.bind(this)} index={1} />
+          <div className="input-boxes">
+            <LetterInput letters={this._letters.bind(this)} index={0} />
+            <LetterInput letters={this._letters.bind(this)} index={1} />
+            <LetterInput letters={this._letters.bind(this)} index={2} />
+            <LetterInput letters={this._letters.bind(this)} index={3} />
+            <LetterInput letters={this._letters.bind(this)} index={4} />
+          </div>
         </header>
         <PasswordList letters={this.state.letters} />
       </div>
@@ -24,23 +29,18 @@ class App extends Component {
   }
 
   _letters(letters, index) {
-    console.log("the state is");
-    // console.log(this.state);
-    // this.setState({ letters: [letters, "", "", "", ""] });
     let stateCopy = Object.assign({}, this.state);
     stateCopy.letters[index] = letters;
-    console.log(stateCopy);
     this.setState({
       stateCopy
     });
-    // console.log(this.state);
   }
 }
 
 class LetterInput extends Component {
   render() {
     return (
-      <form className="App" onChange={this._handleSubmit.bind(this)}>
+      <form className="Letter-input" onChange={this._handleSubmit.bind(this)}>
         <label>Character {this.props.index}</label>
         <div className="input-field">
           <input ref={input => (this._letters = input)} />
