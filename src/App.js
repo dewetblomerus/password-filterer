@@ -7,9 +7,9 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Password</h1>
+          <LetterInput letters={this._letters.bind(this)} index={0} />
         </header>
-        <LetterInput firstLetters={this._firstLetters.bind(this)} />
-        <PasswordList firstLetters={this.state.firstLetters} />
+        <PasswordList letters={this.state.letters} />
       </div>
     );
   }
@@ -18,12 +18,12 @@ class App extends Component {
     super();
 
     this.state = {
-      firstLetters: ""
+      letters: ""
     };
   }
 
-  _firstLetters(letters) {
-    this.setState({ firstLetters: letters });
+  _letters(letters) {
+    this.setState({ letters: letters });
   }
 }
 
@@ -31,7 +31,7 @@ class LetterInput extends Component {
   render() {
     return (
       <form className="App" onChange={this._handleSubmit.bind(this)}>
-        <label>First Character</label>
+        <label>Character {this.props.index}</label>
         <div className="input-field">
           <input ref={input => (this._letters = input)} />
         </div>
@@ -44,7 +44,7 @@ class LetterInput extends Component {
 
     let letters = this._letters;
 
-    this.props.firstLetters(letters.value);
+    this.props.letters(letters.value);
   }
 }
 
@@ -88,13 +88,23 @@ class PasswordList extends Component {
       "write"
     ];
 
-    console.log(this.props.firstLetters);
+    console.log("Letters: " + this.props.letters);
 
-    let filteredPasswords = allPasswords.filter(password =>
-      this.props.firstLetters.includes(password.charAt(0))
-    );
+    function filteredPasswords(letters) {
+      if (letters == "") {
+        console.log("yes");
+        return allPasswords;
+      } else {
+        console.log("no");
+        return allPasswords.filter(password =>
+          letters.includes(password.charAt(0))
+        );
+      }
+    }
 
-    let passwordList = filteredPasswords.map(function(password) {
+    let passwordList = filteredPasswords(this.props.letters).map(function(
+      password
+    ) {
       return <div key={password}>{password}</div>;
     });
 
