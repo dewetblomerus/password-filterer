@@ -6,7 +6,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Password</h1>
+          <h1 className="App-title">Password Filterer</h1>
           <div className="input-boxes">
             <LetterInput letters={this._letters.bind(this)} index={0} />
             <LetterInput letters={this._letters.bind(this)} index={1} />
@@ -41,7 +41,7 @@ class LetterInput extends Component {
   render() {
     return (
       <form className="Letter-input" onChange={this._handleSubmit.bind(this)}>
-        <label>Character {this.props.index}</label>
+        <label>Character {this.props.index + 1}</label>
         <div className="input-field">
           <input ref={input => (this._letters = input)} />
         </div>
