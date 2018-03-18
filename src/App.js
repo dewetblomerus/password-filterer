@@ -122,11 +122,7 @@ class PasswordList extends Component {
       return <div key={password}>{password}</div>;
     });
 
-    return (
-      <div className="App">
-        <div className="password-list">{passwordList}</div>
-      </div>
-    );
+    return <div className="Password-list">{passwordList}</div>;
   }
 }
 
