@@ -8,6 +8,7 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Password</h1>
           <LetterInput letters={this._letters.bind(this)} index={0} />
+          <LetterInput letters={this._letters.bind(this)} index={1} />
         </header>
         <PasswordList letters={this.state.letters} />
       </div>
@@ -18,12 +19,15 @@ class App extends Component {
     super();
 
     this.state = {
-      letters: ""
+      letters: ["", "", "", "", ""]
     };
   }
 
-  _letters(letters) {
-    this.setState({ letters: letters });
+  _letters(letters, index) {
+    console.log("the state is");
+    // console.log(this.state);
+    this.setState({ letters: [letters, "", "", "", ""] });
+    // console.log(this.state);
   }
 }
 
@@ -88,18 +92,22 @@ class PasswordList extends Component {
       "write"
     ];
 
-    console.log("Letters: " + this.props.letters);
+    function possiblePassword(password, letters) {
+      return [...Array(5).keys()]
+        .map(function(i) {
+          if (letters[i] === "") {
+            return true;
+          } else {
+            return letters[i].includes(password.charAt(i));
+          }
+        })
+        .every(bool => bool);
+    }
 
     function filteredPasswords(letters) {
-      if (letters == "") {
-        console.log("yes");
-        return allPasswords;
-      } else {
-        console.log("no");
-        return allPasswords.filter(password =>
-          letters.includes(password.charAt(0))
-        );
-      }
+      return allPasswords.filter(password =>
+        possiblePassword(password, letters)
+      );
     }
 
     let passwordList = filteredPasswords(this.props.letters).map(function(
