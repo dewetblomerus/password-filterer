@@ -4,24 +4,6 @@ import LetterInput from "./LetterInput";
 import PasswordList from "./PasswordList";
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Password Filterer</h1>
-          <div className="input-boxes">
-            <LetterInput letters={this._letters.bind(this)} index={0} />
-            <LetterInput letters={this._letters.bind(this)} index={1} />
-            <LetterInput letters={this._letters.bind(this)} index={2} />
-            <LetterInput letters={this._letters.bind(this)} index={3} />
-            <LetterInput letters={this._letters.bind(this)} index={4} />
-          </div>
-        </header>
-        <PasswordList letters={this.state.letters} />
-      </div>
-    );
-  }
-
   constructor() {
     super();
 
@@ -36,6 +18,22 @@ class App extends Component {
     this.setState({
       stateCopy
     });
+  }
+
+  render() {
+    let inputList = [...Array(this.state.letters.length).keys()].map(index => {
+      return <LetterInput letters={this._letters.bind(this)} index={index} />;
+    });
+
+    return (
+      <div className="App">
+        <header className="App-header">
+          <h1 className="App-title">Password Filterer</h1>
+          <div className="input-boxes">{inputList}</div>
+        </header>
+        <PasswordList letters={this.state.letters} />
+      </div>
+    );
   }
 }
 
