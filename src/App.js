@@ -26,7 +26,13 @@ class App extends Component {
   _letters(letters, index) {
     console.log("the state is");
     // console.log(this.state);
-    this.setState({ letters: [letters, "", "", "", ""] });
+    // this.setState({ letters: [letters, "", "", "", ""] });
+    let stateCopy = Object.assign({}, this.state);
+    stateCopy.letters[index] = letters;
+    console.log(stateCopy);
+    this.setState({
+      stateCopy
+    });
     // console.log(this.state);
   }
 }
@@ -48,7 +54,7 @@ class LetterInput extends Component {
 
     let letters = this._letters;
 
-    this.props.letters(letters.value);
+    this.props.letters(letters.value, this.props.index);
   }
 }
 
